@@ -1,0 +1,27 @@
+{
+  "name": "nodebackendproyecthusrt",
+  "version": "1.0.0",
+  "description": "Aplicativo Hospital Universitario san Rafael de Tunja ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/index.js"
+  },
+  "author": "David Guerrero",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.7.7",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.3",
+    "cookie-session": "^2.1.0",
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
+    "g": "^2.0.1",
+    "jsonwebtoken": "^9.0.2",
+    "mariadb": "^3.4.0",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.1.7",
+    "sequelize": "^6.37.5",
+    "validator": "^13.12.0"
+  }
+}
