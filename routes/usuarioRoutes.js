@@ -70,9 +70,9 @@ app.post('/adduser', async (req, res) => {
     }
   });
 
-  app.get('/users/:id', async (req, res) => {
+  app.get('/user/:id', async (req, res) => {
     try {
-      const user = await Usuario.findByPk(req.params.id, { include: 'role' });
+      const user = await Usuario.findByPk(req.params.id, { include: 'rol' });
       if (user) {
         res.status(200).json(user);
       } else {
@@ -84,7 +84,7 @@ app.post('/adduser', async (req, res) => {
   });
 
 
-app.get('/users/username/:username', async (req, res) => {
+app.get('/users/username/:nombreUsuario', async (req, res) => {
   try {
     const user = await Usuario.findOne({
       where: { nombreUsuario: req.params.nombreUsuario},
@@ -101,16 +101,15 @@ app.get('/users/username/:username', async (req, res) => {
   }
 });
 
-app.put('/users/:id', checkToken, async (req, res) => {
-  const { id } = req.params;
+app.put('/users/update/:id', checkToken, async (req, res) => {
   const { nombres, apellidos, nombreUsuario, tipoId, numeroId, telefono, email, contraseña, registroInvima, estado, rolId } = req.body;
   const hashedPassword = contraseña ? await bcrypt.hash(contraseña, 10) : undefined;
 
   try {
-    const user = await Usuario.findByPk(id);
+    const user = await Usuario.findByPk(req.params.id);
 
     if (!user) {
-      return res.status(404).json({ error: 'Usuario no valido' });
+      return res.status(404).json({ error: 'Usuario no Encontrado' });
     }
 
     await user.update({
