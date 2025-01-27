@@ -49,12 +49,15 @@ app.post('/adduser', async (req, res) => {
         return res.status(401).json({ error: 'Contraseña Incorrecta' });
       }
   
-      const token = jwt.sign({ id: usuario.id, rol: usuario.rol.nombre }, SECRET_KEY, { expiresIn: '1h' });
-  
-      res.json({ 
-        token: token,
-        idUser: usuario.id
-       });
+      if(usuario.estado){
+        const token = jwt.sign({ id: usuario.id, rol: usuario.rol.nombre }, SECRET_KEY, { expiresIn: '1h' });  
+        res.json({ 
+          token: token,
+          idUser: usuario.id
+         });
+      }else{
+        return res.status(404).json({ error: 'Usuario Inactivo' });
+      }
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
