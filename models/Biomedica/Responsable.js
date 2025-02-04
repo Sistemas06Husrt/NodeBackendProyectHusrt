@@ -1,27 +1,28 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/configDb');
 
-const TipoEquipo = sequelize.define('TipoEquipo', {
+const Responsable = sequelize.define('Responsable', {
+
     nombres: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    materialConsumible: {
-        type: DataTypes.STRING,
+    garantia: {
+        type: DataTypes.BOOLEAN,
         allowNull: false,
     },
-    herramienta: {
-        type: DataTypes.STRING,
+    externo: {
+        type: DataTypes.BOOLEAN,
         allowNull: false,
+        unique: true,
     },
-    herramienta: {
-        type: DataTypes.STRING,
+    calificacion: {
+        type: DataTypes.INTEGER,
         allowNull: false,
     }
 }, {
-    tableName: 'tipoEquipos',
+    tableName: 'responsables',
     timestamps: true,
-}
-);
+});
 
-module.exports = TipoEquipo;
+module.exports = Responsable;
