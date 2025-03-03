@@ -14,10 +14,23 @@ const TipoEquipo = sequelize.define('TipoEquipo', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    herramienta: {
+    tiempoMinutos: {
         type: DataTypes.STRING,
         allowNull: false,
-    }
+    },
+    repuestosMinimos: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    // Biomedica, Sistemas, Mantenimiento
+    tipo: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    actividad: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
 }, {
     tableName: 'tipoEquipos',
     timestamps: true,
