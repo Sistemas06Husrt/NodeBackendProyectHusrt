@@ -1,9 +1,9 @@
-const Usuario = require('../models/Usuario');
+const Usuario = require('../../models/Usuario');
 const { Router } = require('express');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const {checkToken} =  require('../utilities/middleware');
+const {checkToken} =  require('../../utilities/middleware');
 const app = Router();
 
 const SECRET_KEY = 'aPPHusRT2024';

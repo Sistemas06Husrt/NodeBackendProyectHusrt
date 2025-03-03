@@ -1,7 +1,7 @@
-const Rol = require('../models/Rol')
+const Rol = require('../../models/Rol')
 const { Router, request } = require('express');
 const app = Router();
-const {checkToken} =  require('../utilities/middleware');
+const {checkToken} =  require('../../utilities/middleware');
 
 
 app.post('/addrole', async (req, res) => {

@@ -23,8 +23,8 @@ const TipoEquipo = sequelize.define('TipoEquipo', {
         allowNull: false,
     },
     // Biomedica, Sistemas, Mantenimiento
-    tipo: {
-        type: DataTypes.STRING,
+    tipoR: {
+        type: DataTypes.INTEGER,
         allowNull: false,
     },
     actividad: {

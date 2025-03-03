@@ -39,6 +39,11 @@ const Equipo = sequelize.define('Equipo', {
         allowNull: false,
         defaultValue: true,
     },
+    periodicidad: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: true,
+    },
     estadoBaja: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
