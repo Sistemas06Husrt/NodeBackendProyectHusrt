@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const Documento = require('../models/Documento');
-const Equipo = require('../models/Equipo');
-const TipoDocumento = require('../models/TipoDocumento');
+const Documento = require('../../models/Biomedica/Documento');
+const Equipo = require('../../models/Biomedica/Equipo');
+const TipoDocumento = require('../../models/Biomedica/TipoDocumento');
 
 // Obtener todos los documentos
 router.get('/', async (req, res) => {

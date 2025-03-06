@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Servicio = require('../models/Servicio');
+const Servicio = require('../../models/Biomedica/Servicio');
 
 // Obtener todos los servicios
 router.get('/', async (req, res) => {

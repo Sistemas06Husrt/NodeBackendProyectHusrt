@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/configDb');
+const sequelize = require('../../config/configDb');
 const TipoDocumento = require('./TipoDocumento');
-
+const Equipo =require('./Equipo')
 const Documento = sequelize.define('Documento', {
 
   nombres: {

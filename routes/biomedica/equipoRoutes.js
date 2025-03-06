@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const Equipo = require('../models/Equipo');
-const TipoEquipo = require('../models/TipoEquipo');
-const Servicio = require('../models/Servicio');
-const Sede = require('../models/Sede');
-const Responsable = require('../models/Responsable');
+const Equipo = require('../../models/Biomedica/Equipo');
+const TipoEquipo = require('../../models/Biomedica/TipoEquipo');
+const Servicio = require('../../models/Biomedica/Servicio');
+const Sede = require('../../models/Biomedica/Sede');
+const Responsable = require('../../models/Biomedica/Responsable');
 
 // Obtener todos los equipos
-router.get('/', async (req, res) => {
+router.get('/equipos/', async (req, res) => {
     try {
         const equipos = await Equipo.findAll({
             include: [
@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
 });
 
 // Obtener un equipo por ID
-router.get('/:id', async (req, res) => {
+router.get('/equipo/:id', async (req, res) => {
     try {
         const equipo = await Equipo.findByPk(req.params.id, {
             include: [
@@ -46,7 +46,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // Crear un nuevo equipo
-router.post('/', async (req, res) => {
+router.post('/addequipo/', async (req, res) => {
     try {
         const equipo = await Equipo.create(req.body);
         res.status(201).json(equipo);
@@ -56,7 +56,7 @@ router.post('/', async (req, res) => {
 });
 
 // Actualizar un equipo
-router.put('/:id', async (req, res) => {
+router.put('/Actequipo/:id', async (req, res) => {
     try {
         const equipo = await Equipo.findByPk(req.params.id);
         if (!equipo) {
@@ -71,7 +71,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // Eliminar un equipo
-router.delete('/:id', async (req, res) => {
+router.delete('/remequipo/:id', async (req, res) => {
     try {
         const equipo = await Equipo.findByPk(req.params.id);
         if (!equipo) {

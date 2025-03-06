@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const HojaVida = require('../models/HojaVida');
-const Equipo = require('../models/Equipo');
+const HojaVida = require('../../models/Biomedica/HojaVida');
+const Equipo = require('../../models/Biomedica/Equipo');
 
 // Obtener todas las hojas de vida
 router.get('/', async (req, res) => {
