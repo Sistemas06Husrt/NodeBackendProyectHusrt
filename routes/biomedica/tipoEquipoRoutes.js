@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const TipoEquipo = require('../../models/Biomedica/TipoEquipo');
+const TipoEquipo = require('../../models/generales/TipoEquipo');
 
 // Obtener todos los tipos de equipo
-router.get('/', async (req, res) => {
+router.get('/tiposequipo', async (req, res) => {
     try {
         const tiposEquipos = await TipoEquipo.findAll();
         res.json(tiposEquipos);
@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
 });
 
 // Obtener un tipo de equipo por ID
-router.get('/:id', async (req, res) => {
+router.get('/tiposequipo/:id', async (req, res) => {
     try {
         const tipoEquipo = await TipoEquipo.findByPk(req.params.id);
         if (!tipoEquipo) {
@@ -26,7 +26,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // Crear un nuevo tipo de equipo
-router.post('/', async (req, res) => {
+router.post('/addtiposequipo', async (req, res) => {
     try {
         const tipoEquipo = await TipoEquipo.create(req.body);
         res.status(201).json(tipoEquipo);
@@ -36,7 +36,7 @@ router.post('/', async (req, res) => {
 });
 
 // Actualizar un tipo de equipo
-router.put('/:id', async (req, res) => {
+router.put('/tiposequipo/:id', async (req, res) => {
     try {
         const tipoEquipo = await TipoEquipo.findByPk(req.params.id);
         if (!tipoEquipo) {
@@ -51,7 +51,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // Eliminar un tipo de equipo
-router.delete('/:id', async (req, res) => {
+router.delete('/tiposequipo/:id', async (req, res) => {
     try {
         const tipoEquipo = await TipoEquipo.findByPk(req.params.id);
         if (!tipoEquipo) {

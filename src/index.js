@@ -11,13 +11,13 @@ const documentoRoutes = require('./../routes/general/documentoRoutes');
 const tipoEquipos = require('./../routes/biomedica/tipoEquipoRoutes');
 const equipo = require('./../routes/biomedica/equipoRoutes');
 const hojaVida = require('./../routes/biomedica/hojaVidaRoutes');
+const sede = require('./../routes/general/sedeRoutes');
+
 
 const {checkToken} =  require('./../utilities/middleware');
 const sequelize = require('./../config/configDb');
 
-//settings
-app.set('port', 3005);
-app.listen(3005, '0.0.0.0')
+
 //middlewares
 app.use(morgan('dev'));
 app.use(express.json());
@@ -26,16 +26,19 @@ app.use(cors());
 
 app.use(rolRoutes);
 app.use(usuarioRoutes);
+
 app.use(servicioRoutes, checkToken);
 app.use(tipoDocumento, checkToken);
 app.use(documentoRoutes, checkToken);
 app.use(tipoEquipos, checkToken);
 app.use(hojaVida, checkToken);
+app.use(equipo, checkToken);
+app.use(sede, checkToken);
 
 sequelize.sync()
   .then(() => {
-    app.listen(3000, () => {
-      console.log('Server is running on http://localhost:3000');
+    app.listen(3005,'0.0.0.0', () => {
+      console.log('Server is running on http://localhost:3005');
     });
   })
   .catch(err => console.log('Error:', err));

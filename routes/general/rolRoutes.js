@@ -1,4 +1,4 @@
-const Rol = require('../../models/Rol')
+const Rol = require('../../models/generales/Rol')
 const { Router, request } = require('express');
 const app = Router();
 const {checkToken} =  require('../../utilities/middleware');

@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const Equipo = require('../../models/Biomedica/Equipo');
-const TipoEquipo = require('../../models/Biomedica/TipoEquipo');
-const Servicio = require('../../models/Biomedica/Servicio');
-const Sede = require('../../models/Biomedica/Sede');
+const TipoEquipo = require('../../models/generales/TipoEquipo');
+const Servicio = require('../../models/generales/Servicio');
+const Sede = require('../../models/generales/Sede');
 const Responsable = require('../../models/Biomedica/Responsable');
 
 // Obtener todos los equipos
-router.get('/equipos/', async (req, res) => {
+router.get('/equipos', async (req, res) => {
     try {
         const equipos = await Equipo.findAll({
             include: [
@@ -46,7 +46,7 @@ router.get('/equipo/:id', async (req, res) => {
 });
 
 // Crear un nuevo equipo
-router.post('/addequipo/', async (req, res) => {
+router.post('/addequipo', async (req, res) => {
     try {
         const equipo = await Equipo.create(req.body);
         res.status(201).json(equipo);

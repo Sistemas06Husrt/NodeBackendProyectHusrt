@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 const Documento = require('../../models/Biomedica/Documento');
 const Equipo = require('../../models/Biomedica/Equipo');
-const TipoDocumento = require('../../models/Biomedica/TipoDocumento');
+const TipoDocumento = require('../../models/generales/TipoDocumento');
 
 // Obtener todos los documentos
-router.get('/', async (req, res) => {
+router.get('/documentos', async (req, res) => {
     try {
         const documentos = await Documento.findAll({
             include: [
@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
 });
 
 // Obtener un documento por ID
-router.get('/:id', async (req, res) => {
+router.get('/documentos/:id', async (req, res) => {
     try {
         const documento = await Documento.findByPk(req.params.id, {
             include: [
@@ -39,7 +39,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // Crear un nuevo documento
-router.post('/', async (req, res) => {
+router.post('/adddocumento', async (req, res) => {
     try {
         const nuevoDocumento = await Documento.create(req.body);
         res.status(201).json(nuevoDocumento);
@@ -49,7 +49,7 @@ router.post('/', async (req, res) => {
 });
 
 // Actualizar un documento por ID
-router.put('/:id', async (req, res) => {
+router.put('/documentos/:id', async (req, res) => {
     try {
         const documento = await Documento.findByPk(req.params.id);
         if (!documento) {
@@ -64,7 +64,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // Eliminar un documento por ID
-router.delete('/:id', async (req, res) => {
+router.delete('/documentos/:id', async (req, res) => {
     try {
         const documento = await Documento.findByPk(req.params.id);
         if (!documento) {

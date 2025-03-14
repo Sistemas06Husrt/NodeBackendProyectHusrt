@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const Servicio = require('../../models/Biomedica/Servicio');
+const Servicio = require('../../models/generales/Servicio');
 
 // Obtener todos los servicios
-router.get('/', async (req, res) => {
+router.get('/servicios', async (req, res) => {
     try {
         const servicios = await Servicio.findAll();
         res.json(servicios);
@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
 });
 
 // Obtener un servicio por ID
-router.get('/:id', async (req, res) => {
+router.get('/servicios/:id', async (req, res) => {
     try {
         const servicio = await Servicio.findByPk(req.params.id);
         if (!servicio) {
@@ -26,7 +26,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // Crear un nuevo servicio
-router.post('/', async (req, res) => {
+router.post('/addservicio', async (req, res) => {
     try {
         const servicio = await Servicio.create(req.body);
         res.status(201).json(servicio);
@@ -36,7 +36,7 @@ router.post('/', async (req, res) => {
 });
 
 // Actualizar un servicio
-router.put('/:id', async (req, res) => {
+router.put('/servicios/:id', async (req, res) => {
     try {
         const servicio = await Servicio.findByPk(req.params.id);
         if (!servicio) {
@@ -51,7 +51,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // Eliminar un servicio
-router.delete('/:id', async (req, res) => {
+router.delete('/servicios/:id', async (req, res) => {
     try {
         const servicio = await Servicio.findByPk(req.params.id);
         if (!servicio) {

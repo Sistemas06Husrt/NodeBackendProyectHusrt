@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const TipoDocumento = require('../../models/Biomedica/TipoDocumento');
+const TipoDocumento = require('../../models/generales/TipoDocumento');
 
 // Obtener todos los tipos de documentos
-router.get('/', async (req, res) => {
+router.get('/tiposdocumento', async (req, res) => {
     try {
         const tiposDocumento = await TipoDocumento.findAll();
         res.json(tiposDocumento);
@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
 });
 
 // Obtener un tipo de documento por ID
-router.get('/:id', async (req, res) => {
+router.get('/tiposdocumento/:id', async (req, res) => {
     try {
         const tipoDocumento = await TipoDocumento.findByPk(req.params.id);
         if (!tipoDocumento) {
@@ -26,7 +26,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // Crear un nuevo tipo de documento
-router.post('/', async (req, res) => {
+router.post('/addtiposdocumento', async (req, res) => {
     try {
         const nuevoTipoDocumento = await TipoDocumento.create(req.body);
         res.status(201).json(nuevoTipoDocumento);
@@ -36,7 +36,7 @@ router.post('/', async (req, res) => {
 });
 
 // Actualizar un tipo de documento
-router.put('/:id', async (req, res) => {
+router.put('/tiposdocumento/:id', async (req, res) => {
     try {
         const tipoDocumento = await TipoDocumento.findByPk(req.params.id);
         if (!tipoDocumento) {
@@ -51,7 +51,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // Eliminar un tipo de documento
-router.delete('/:id', async (req, res) => {
+router.delete('/tiposdocumento/:id', async (req, res) => {
     try {
         const tipoDocumento = await TipoDocumento.findByPk(req.params.id);
         if (!tipoDocumento) {

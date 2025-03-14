@@ -1,8 +1,8 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/configDb');
-const TipoEquipo = require('../Biomedica/TipoEquipo');
-const Servicio = require('./Servicio');
-const Sede = require('./Sede');
+const TipoEquipo = require('../generales/TipoEquipo');
+const Servicio = require('../generales/Servicio');
+const Sede = require('../generales/Sede');
 const Responsable = require('./Responsable');
 
 const Equipo = sequelize.define('Equipo', {

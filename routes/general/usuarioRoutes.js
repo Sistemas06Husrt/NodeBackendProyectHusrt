@@ -1,4 +1,4 @@
-const Usuario = require('../../models/Usuario');
+const Usuario = require('../../models/generales/Usuario');
 const { Router } = require('express');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
@@ -73,7 +73,7 @@ app.post('/adduser', async (req, res) => {
     }
   });
 
-  app.get('/user/:id', async (req, res) => {
+  app.get('/user/:id', checkToken, async (req, res) => {
     try {
       const user = await Usuario.findByPk(req.params.id, { include: 'rol' });
       if (user) {

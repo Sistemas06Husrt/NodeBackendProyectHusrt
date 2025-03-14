@@ -4,7 +4,7 @@ const HojaVida = require('../../models/Biomedica/HojaVida');
 const Equipo = require('../../models/Biomedica/Equipo');
 
 // Obtener todas las hojas de vida
-router.get('/', async (req, res) => {
+router.get('/hojasvida', async (req, res) => {
     try {
         const hojasVida = await HojaVida.findAll({
             include: { model: Equipo, as: 'equipo' }
@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
 });
 
 // Obtener una hoja de vida por ID
-router.get('/:id', async (req, res) => {
+router.get('/hojasvida/:id', async (req, res) => {
     try {
         const hojaVida = await HojaVida.findByPk(req.params.id, {
             include: { model: Equipo, as: 'equipo' }
@@ -31,7 +31,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // Crear una nueva hoja de vida
-router.post('/', async (req, res) => {
+router.post('/addhojasvida', async (req, res) => {
     try {
         const nuevaHojaVida = await HojaVida.create(req.body);
         res.status(201).json(nuevaHojaVida);
@@ -41,7 +41,7 @@ router.post('/', async (req, res) => {
 });
 
 // Actualizar una hoja de vida
-router.put('/:id', async (req, res) => {
+router.put('/hojasvida/:id', async (req, res) => {
     try {
         const hojaVida = await HojaVida.findByPk(req.params.id);
         if (!hojaVida) {
@@ -56,7 +56,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // Eliminar una hoja de vida
-router.delete('/:id', async (req, res) => {
+router.delete('/hojasvida/:id', async (req, res) => {
     try {
         const hojaVida = await HojaVida.findByPk(req.params.id);
         if (!hojaVida) {
