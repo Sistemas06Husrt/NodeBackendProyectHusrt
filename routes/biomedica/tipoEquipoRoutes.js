@@ -12,6 +12,15 @@ router.get('/tiposequipo', async (req, res) => {
     }
 });
 
+router.get('/tiposequipoBio', async (req, res) => {
+    try {
+        const tiposEquipos = await TipoEquipo.findAll({where:{tipoR: 1}});
+        res.json(tiposEquipos);
+    } catch (error) {
+        res.status(500).json({ error: 'Error al obtener los tipos de equipo', detalle: error.message });
+    }
+});
+
 // Obtener un tipo de equipo por ID
 router.get('/tiposequipo/:id', async (req, res) => {
     try {

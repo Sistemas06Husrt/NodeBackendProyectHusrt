@@ -23,6 +23,28 @@ router.get('/equipos', async (req, res) => {
     }
 });
 
+// Obtener todos los equipos de un tipo especifico
+router.get('/equipos/tipo/:idtipo', async (req, res) => {
+    try {
+        const equipos = await Equipo.findAll({where:{tipoEquipoIdFk: req.params.idtipo}
+        });
+        res.json(equipos);
+    } catch (error) {
+        res.status(500).json({ error: 'Error al obtener los equipos', detalle: error.message });
+    }
+});
+
+// Obtener todos los equipos de un servicio especifico
+router.get('/equipos/servicio/:idserv', async (req, res) => {
+    try {
+        const equipos = await Equipo.findAll({where:{servicioIdFk: req.params.idserv}
+        });
+        res.json(equipos);
+    } catch (error) {
+        res.status(500).json({ error: 'Error al obtener los equipos', detalle: error.message });
+    }
+});
+
 // Obtener un equipo por ID
 router.get('/equipo/:id', async (req, res) => {
     try {

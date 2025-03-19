@@ -14,7 +14,7 @@ const Sede = sequelize.define('Sede', {
     nit: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
+        unique: false,
     },
     ciudad: {
         type: DataTypes.STRING,

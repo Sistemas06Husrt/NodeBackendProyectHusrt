@@ -3,6 +3,7 @@ const sequelize = require('../../config/configDb');
 
 const Responsable = sequelize.define('Responsable', {
 
+    
     nombres: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -14,7 +15,7 @@ const Responsable = sequelize.define('Responsable', {
     externo: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
-        unique: true,
+        unique: false,
     },
     calificacion: {
         type: DataTypes.INTEGER,
