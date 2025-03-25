@@ -45,6 +45,17 @@ router.get('/equipos/servicio/:idserv', async (req, res) => {
     }
 });
 
+// Obtener todos los equipos de un responsable especifico
+router.get('/equipos/responsable/:idresp', async (req, res) => {
+    try {
+        const equipos = await Equipo.findAll({where:{responsableIdFk: req.params.idresp}
+        });
+        res.json(equipos);
+    } catch (error) {
+        res.status(500).json({ error: 'Error al obtener los equipos', detalle: error.message });
+    }
+});
+
 // Obtener un equipo por ID
 router.get('/equipo/:id', async (req, res) => {
     try {

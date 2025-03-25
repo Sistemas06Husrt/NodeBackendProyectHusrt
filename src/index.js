@@ -13,6 +13,7 @@ const equipo = require('./../routes/biomedica/equipoRoutes');
 const hojaVida = require('./../routes/biomedica/hojaVidaRoutes');
 const sede = require('./../routes/general/sedeRoutes');
 const responsable = require('./../routes/biomedica/responsableRoutes');
+const planMantenimiento = require('./../routes/biomedica/planMantenimientoRoutes');
 
 
 const {checkToken} =  require('./../utilities/middleware');
@@ -36,6 +37,7 @@ app.use(hojaVida, checkToken);
 app.use(equipo, checkToken);
 app.use(sede, checkToken);
 app.use(responsable, checkToken);
+app.use(planMantenimiento, checkToken);
 
 sequelize.sync()
   .then(() => {

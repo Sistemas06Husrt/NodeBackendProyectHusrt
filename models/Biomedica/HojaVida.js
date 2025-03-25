@@ -17,19 +17,19 @@ const HojaVida = sequelize.define('HojaVida', {
     },
     fechaCompra: {
         type: DataTypes.DATE,
-        allowNull: false,
+        allowNull: true,
     },
     fechaInstalacion: {
         type: DataTypes.DATE,
-        allowNull: false,
+        allowNull: true,
     },
     fechaIncorporacion: {
         type: DataTypes.DATE,
-        allowNull: false,
+        allowNull: true,
     },
     fechaVencimientoGarantia: {
         type: DataTypes.DATE,
-        allowNull: false,
+        allowNull: true,
     },
     riesgo: {
         type: DataTypes.ENUM('NA', 'I', 'IIA', 'IIB', 'III', 'IV'),
