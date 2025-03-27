@@ -14,7 +14,9 @@ const hojaVida = require('./../routes/biomedica/hojaVidaRoutes');
 const sede = require('./../routes/general/sedeRoutes');
 const responsable = require('./../routes/biomedica/responsableRoutes');
 const planMantenimiento = require('./../routes/biomedica/planMantenimientoRoutes');
-
+const Proveedor = require('./../routes/biomedica/proveedorRoutes');
+const Fabricante = require('./../routes/biomedica/fabricanteRoutes');
+const DatosTecnicos = require('./../routes/biomedica/datosTecnicosRoutes');
 
 const {checkToken} =  require('./../utilities/middleware');
 const sequelize = require('./../config/configDb');
@@ -38,6 +40,9 @@ app.use(equipo, checkToken);
 app.use(sede, checkToken);
 app.use(responsable, checkToken);
 app.use(planMantenimiento, checkToken);
+app.use(Proveedor, checkToken);
+app.use(Fabricante, checkToken);
+app.use(DatosTecnicos, checkToken);
 
 sequelize.sync()
   .then(() => {

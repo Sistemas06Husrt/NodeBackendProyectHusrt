@@ -10,6 +10,26 @@ const Responsable = require('../../models/Biomedica/Responsable');
 router.get('/equipos', async (req, res) => {
     try {
         const equipos = await Equipo.findAll({
+            where: { estadoBaja: false },
+            include: [
+                { model: TipoEquipo, as: 'tipoEquipos' },
+                { model: Servicio, as: 'servicios' },
+                { model: Sede, as: 'sedes' },
+                { model: Responsable, as: 'responsables' }
+            ],
+            order: [['serie', 'ASC']]
+        });
+        res.json(equipos);
+    } catch (error) {
+        res.status(500).json({ error: 'Error al obtener los equipos', detalle: error.message });
+    }
+});
+
+// Obtener todos los equipos dados de baja
+router.get('/equipos/bajas', async (req, res) => {
+    try {
+        const equipos = await Equipo.findAll({
+            where: { estadoBaja: true },
             include: [
                 { model: TipoEquipo, as: 'tipoEquipos' },
                 { model: Servicio, as: 'servicios' },
@@ -26,7 +46,9 @@ router.get('/equipos', async (req, res) => {
 // Obtener todos los equipos de un tipo especifico
 router.get('/equipos/tipo/:idtipo', async (req, res) => {
     try {
-        const equipos = await Equipo.findAll({where:{tipoEquipoIdFk: req.params.idtipo}
+        const equipos = await Equipo.findAll({
+            where: { tipoEquipoIdFk: req.params.idtipo },
+            order: [['nombres', 'ASC']]
         });
         res.json(equipos);
     } catch (error) {
@@ -37,7 +59,8 @@ router.get('/equipos/tipo/:idtipo', async (req, res) => {
 // Obtener todos los equipos de un servicio especifico
 router.get('/equipos/servicio/:idserv', async (req, res) => {
     try {
-        const equipos = await Equipo.findAll({where:{servicioIdFk: req.params.idserv}
+        const equipos = await Equipo.findAll({
+            where: { servicioIdFk: req.params.idserv }
         });
         res.json(equipos);
     } catch (error) {
@@ -48,7 +71,8 @@ router.get('/equipos/servicio/:idserv', async (req, res) => {
 // Obtener todos los equipos de un responsable especifico
 router.get('/equipos/responsable/:idresp', async (req, res) => {
     try {
-        const equipos = await Equipo.findAll({where:{responsableIdFk: req.params.idresp}
+        const equipos = await Equipo.findAll({
+            where: { responsableIdFk: req.params.idresp }
         });
         res.json(equipos);
     } catch (error) {

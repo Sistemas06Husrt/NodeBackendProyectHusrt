@@ -41,8 +41,7 @@ const Documento = sequelize.define('Documento', {
 Equipo.hasMany(Documento, { foreignKey: 'equipoIdFk', as: 'documentos' });
 Documento.belongsTo(Equipo, { foreignKey: 'equipoIdFk', as: 'equipo' });
 
-TipoDocumento.hasMany(Documento, { foreignKey: 'tipoDocumentoIdFk', as: 'documentos' });
-Documento.belongsTo(TipoDocumento, { foreignKey: 'tipoDocumentoIdFk', as: 'tipoDocumento' });
-
+TipoDocumento.hasMany(Documento, { foreignKey: 'tipoDocumntoIdFk', as: 'documentos' });
+Documento.belongsTo(TipoDocumento, { foreignKey: 'tipoDocumntoIdFk', as: 'tipoDocumento' });
 
 module.exports = Documento;

@@ -1,19 +1,26 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/configDb');
 const Equipo = require('./Equipo');
+const Proveedor = require('./Proveedor');
+const Fabricante = require('./Fabricante');
+const DatosTecnicos = require('./DatosTecnicos');
 
 const HojaVida = sequelize.define('HojaVida', {
+    codigoInternacional: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
     anoIngreso: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
     },
     contrato: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
     tipoAdquisicion: {
         type: DataTypes.ENUM('Compra', 'Convenio', 'Donado', 'AsignadoMinisterio', 'AsignadoGovernacion', 'Comodato'),
-        allowNull: false
+        allowNull: true
     },
     fechaCompra: {
         type: DataTypes.DATE,
@@ -31,29 +38,65 @@ const HojaVida = sequelize.define('HojaVida', {
         type: DataTypes.DATE,
         allowNull: true,
     },
+    costoCompra: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+    },
+    registroInvima: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
     riesgo: {
         type: DataTypes.ENUM('NA', 'I', 'IIA', 'IIB', 'III', 'IV'),
-        allowNull: false
+        allowNull: true
     },
     fuente: {
         type: DataTypes.ENUM('Electricidad', 'Energia Solar', 'Agua', 'Gas', 'Vapor de agua', 'Derivados del petroleo', 'Otra'),
-        allowNull: false
+        allowNull: true
     },
     tipo: {
-        type: DataTypes.ENUM('Medico', 'Basico', 'Apollo'),
-        allowNull: false
+        type: DataTypes.ENUM('Medico', 'Basico', 'Apoyo'),
+        allowNull: true
     },
     tipoUso: {
         type: DataTypes.ENUM('Diagnostico', 'Tratamiento', 'Rehabilitacion', 'Prevencion', 'Analisis'),
-        allowNull: false
+        allowNull: true
+    },
+    clase: {
+        type: DataTypes.ENUM('Electrico', 'Electronico', 'Mecanico', 'Electromecanico', 'Hidraulico', 'Neumatico', 'Vapor', 'Solar'),
+        allowNull: true
+    },
+    mantenimiento: {
+        type: DataTypes.ENUM('Propio', 'Contratado', 'Comodato', 'Garantia'),
+        allowNull: true
+    },
+    propiedad: {
+        type: DataTypes.ENUM('Hospital', 'Proveedor', 'otro'),
+        allowNull: true
+    },
+    equipoPortatil: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
     },
     foto: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
+        validate: {
+            isUrl: true
+        }
     },
     observaciones: {
         type: DataTypes.STRING,
+        allowNull: true,
+        defaultValue: "",
+    },
+    datosTecnicosIdFk: {
+        type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+            model: DatosTecnicos,
+            key: 'id'
+        },
     },
     equipoIdFk: {
         type: DataTypes.INTEGER,
@@ -62,7 +105,23 @@ const HojaVida = sequelize.define('HojaVida', {
             model: Equipo,
             key: 'id'
         },
-    }
+    },
+    fabricanteIdFk: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: Fabricante,
+            key: 'id'
+        },
+    },
+    proveedorIdFk: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: Proveedor,
+            key: 'id'
+        },
+    },
 }, {
     tableName: 'hojavida',
     timestamps: true,
@@ -72,8 +131,11 @@ const HojaVida = sequelize.define('HojaVida', {
 Equipo.hasOne(HojaVida, { foreignKey: 'equipoIdFk', as: 'hojaVida' });
 HojaVida.belongsTo(Equipo, { foreignKey: 'equipoIdFk', as: 'equipo' });
 
+Fabricante.hasMany(HojaVida, { foreignKey: 'fabricanteIdFk', as: 'hojaVida' });
+HojaVida.belongsTo(Fabricante, { foreignKey: 'fabricanteIdFk', as: 'fabricante' });
 
+Proveedor.hasMany(HojaVida, { foreignKey: 'proveedorIdFk', as: 'hojaVida' });
+HojaVida.belongsTo(Proveedor, { foreignKey: 'proveedorIdFk', as: 'proveedor' });
 
-
-
-
+DatosTecnicos.hasOne(HojaVida, { foreignKey: 'datosTecnicosIdFk', as: 'hojaVida' });
+HojaVida.belongsTo(DatosTecnicos, { foreignKey: 'datosTecnicosIdFk', as: 'datosTecnicos' });

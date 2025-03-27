@@ -2,8 +2,7 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/configDb');
 
 const Responsable = sequelize.define('Responsable', {
-
-    
+  
     nombres: {
         type: DataTypes.STRING,
         allowNull: false,

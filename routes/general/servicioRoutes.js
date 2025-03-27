@@ -5,7 +5,8 @@ const Servicio = require('../../models/generales/Servicio');
 // Obtener todos los servicios
 router.get('/servicios', async (req, res) => {
     try {
-        const servicios = await Servicio.findAll();
+        const servicios = await Servicio.findAll({
+            order: [['nombres', 'ASC']]});
         res.json(servicios);
     } catch (error) {
         res.status(500).json({ error: 'Error al obtener los servicios', detalle: error.message });
