@@ -2,6 +2,7 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/configDb');
 const TipoDocumento = require('../generales/TipoDocumento');
 const Equipo =require('./Equipo')
+
 const Documento = sequelize.define('Documento', {
 
   nombres: {
