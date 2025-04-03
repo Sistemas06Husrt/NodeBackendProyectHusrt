@@ -110,5 +110,4 @@ Reporte.belongsTo(Equipo, { foreignKey: 'equipoIdFk', as: 'equipo' });
 Usuario.hasMany(Reporte, { foreignKey: 'usuarioIdFk', as: 'reporte' });
 Reporte.belongsTo(Usuario, { foreignKey: 'usuarioIdFk', as: 'usuario' });
 
-
 module.exports = Reporte;

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Servicio = require('../../models/generales/Servicio');
+const Equipo = require('../../models/Biomedica/Equipo');
 
 // Obtener todos los servicios
 router.get('/servicios', async (req, res) => {
@@ -10,6 +11,15 @@ router.get('/servicios', async (req, res) => {
         res.json(servicios);
     } catch (error) {
         res.status(500).json({ error: 'Error al obtener los servicios', detalle: error.message });
+    }
+});
+
+router.get('/cantidadequiposserv/:id', async (req, res) => {
+    try {
+        const cantidadEquipos = await Equipo.count({where:{ servicioIdFk: req.params.id, estadoBaja: false }});
+        res.json(cantidadEquipos);
+    } catch (error) {
+        res.status(500).json({ error: 'Error al obtener los proveedores', detalle: error.message });
     }
 });
 

@@ -47,7 +47,7 @@ router.get('/equipos/bajas', async (req, res) => {
 router.get('/equipos/tipo/:idtipo', async (req, res) => {
     try {
         const equipos = await Equipo.findAll({
-            where: { tipoEquipoIdFk: req.params.idtipo },
+            where: { tipoEquipoIdFk: req.params.idtipo, estadoBaja: false },
             order: [['nombres', 'ASC']]
         });
         res.json(equipos);
@@ -60,7 +60,7 @@ router.get('/equipos/tipo/:idtipo', async (req, res) => {
 router.get('/equipos/servicio/:idserv', async (req, res) => {
     try {
         const equipos = await Equipo.findAll({
-            where: { servicioIdFk: req.params.idserv }
+            where: { servicioIdFk: req.params.idserv, estadoBaja: false }
         });
         res.json(equipos);
     } catch (error) {
@@ -72,7 +72,7 @@ router.get('/equipos/servicio/:idserv', async (req, res) => {
 router.get('/equipos/responsable/:idresp', async (req, res) => {
     try {
         const equipos = await Equipo.findAll({
-            where: { responsableIdFk: req.params.idresp }
+            where: { responsableIdFk: req.params.idresp, estadoBaja: false }
         });
         res.json(equipos);
     } catch (error) {

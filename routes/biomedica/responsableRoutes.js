@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Responsable = require('../../models/Biomedica/Responsable');
-
+const Equipo = require('../../models/Biomedica/Equipo');
 
 // Obtener todos los responsables
 router.get('/responsables', async (req, res) => {
@@ -10,6 +10,16 @@ router.get('/responsables', async (req, res) => {
         res.json(responsables);
     } catch (error) {
         res.status(500).json({ error: 'Error al obtener los responsables', detalle: error.message });
+    }
+});
+
+// 
+router.get('/cantidadequiposprov/:id', async (req, res) => {
+    try {
+        const cantidadEquipos = await Equipo.count({where:{ responsableIdFk: req.params.id, estadoBaja: false }});
+        res.json(cantidadEquipos);
+    } catch (error) {
+        res.status(500).json({ error: 'Error al obtener los proveedores', detalle: error.message });
     }
 });
 

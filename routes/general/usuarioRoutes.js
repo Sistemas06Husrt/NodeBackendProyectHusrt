@@ -3,97 +3,112 @@ const { Router } = require('express');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const {checkToken} =  require('../../utilities/middleware');
+const { checkToken } = require('../../utilities/middleware');
 const app = Router();
 
 const SECRET_KEY = 'aPPHusRT2024';
 
 app.post('/adduser', async (req, res) => {
-    try {
-      const { nombres, apellidos, nombreUsuario, tipoId, numeroId, telefono, email, contrasena, registroInvima, estado, rolId } = req.body;
-      const contraseña = await bcrypt.hash(contrasena, 10);
-      const nuevoUsuario = await Usuario.create({
-        nombres,
-        apellidos,
-        nombreUsuario, 
-        tipoId, 
-        numeroId, 
-        telefono, 
-        email, 
-        contraseña, 
-        registroInvima, 
-        estado, 
-        rolId
+  try {
+    const { nombres, apellidos, nombreUsuario, tipoId, numeroId, telefono, email, contrasena, registroInvima, estado, rolId } = req.body;
+    const contraseña = await bcrypt.hash(contrasena, 10);
+    const nuevoUsuario = await Usuario.create({
+      nombres,
+      apellidos,
+      nombreUsuario,
+      tipoId,
+      numeroId,
+      telefono,
+      email,
+      contraseña,
+      registroInvima,
+      estado,
+      rolId
+    });
+
+    res.status(201).json(nuevoUsuario);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+app.post('/login', async (req, res) => {
+  const { usuarion, contraseña } = req.body;
+  try {
+    const usuario = await Usuario.findOne({
+      where: { nombreUsuario: usuarion }, 
+      include: 'rol'
+  });
+
+    if (!usuario) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+
+    const isPasswordValid = await bcrypt.compare(contraseña, usuario.contraseña);
+
+    if (!isPasswordValid) {
+      return res.status(401).json({ error: 'Contraseña Incorrecta' });
+    }
+
+    if (usuario.estado) {
+      const token = jwt.sign({ id: usuario.id, rol: usuario.rol.nombre }, SECRET_KEY, { expiresIn: '1h' });
+      res.json({
+        token: token,
+        idUser: usuario.id
       });
-  
-      res.status(201).json(nuevoUsuario);
-    } catch (err) {
-      res.status(500).json({ error: err.message });
+    } else {
+      return res.status(404).json({ error: 'Usuario Inactivo' });
     }
-  });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
 
 
-  app.post('/login', async (req, res) => {
-    const { email, contraseña } = req.body;
-  
-    try {
-      const usuario = await Usuario.findOne({ where: { email }, include: 'rol'});
-  
-      if (!usuario) {
-        return res.status(404).json({ error: 'Usuario no encontrado' });
-      }
-  
-      const isPasswordValid = await bcrypt.compare(contraseña, usuario.contraseña);
-  
-      if (!isPasswordValid) {
-        return res.status(401).json({ error: 'Contraseña Incorrecta' });
-      }
-  
-      if(usuario.estado){
-        const token = jwt.sign({ id: usuario.id, rol: usuario.rol.nombre }, SECRET_KEY, { expiresIn: '1h' });  
-        res.json({ 
-          token: token,
-          idUser: usuario.id
-         });
-      }else{
-        return res.status(404).json({ error: 'Usuario Inactivo' });
-      }
-    } catch (error) {
-      res.status(400).json({ error: error.message });
-    }
-  });
-  
-  
-  app.get('/users', checkToken, async (req, res) => {
-    try {
-      const users = await Usuario.findAll({ include: 'rol' });
-      res.status(200).json(users);
-    } catch (err) {
-      res.status(500).json({ error: err.message });
-    }
-  });
+app.get('/users', checkToken, async (req, res) => {
+  try {
+    const users = await Usuario.findAll({ include: 'rol' });
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
-  app.get('/user/:id', checkToken, async (req, res) => {
-    try {
-      const user = await Usuario.findByPk(req.params.id, { include: 'rol' });
-      if (user) {
-        res.status(200).json(user);
-      } else {
-        res.status(404).json({ error: 'User not found' });
-      }
-    } catch (err) {
-      res.status(500).json({ error: err.message });
+app.get('/user/:id', checkToken, async (req, res) => {
+  try {
+    const user = await Usuario.findByPk(req.params.id, { include: 'rol' });
+    if (user) {
+      res.status(200).json(user);
+    } else {
+      res.status(404).json({ error: 'User not found' });
     }
-  });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/userprofil/:id', checkToken, async (req, res) => {
+  try {
+    const user = await Usuario.findByPk(req.params.id);
+    if (user) {
+      res.status(200).json(user);
+    } else {
+      res.status(404).json({ error: 'User not found' });
+    }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 
 app.get('/users/username/:nombreUsuario', async (req, res) => {
   try {
     const user = await Usuario.findOne({
-      where: { nombreUsuario: req.params.nombreUsuario},
+      where: { nombreUsuario: req.params.nombreUsuario },
       include: 'rol'
     });
-    
+
     if (user) {
       res.status(200).json(user);
     } else {
@@ -135,4 +150,4 @@ app.put('/users/update/:id', checkToken, async (req, res) => {
   }
 });
 
-  module.exports = app;
+module.exports = app;

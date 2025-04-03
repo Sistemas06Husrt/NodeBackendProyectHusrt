@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const TipoEquipo = require('../../models/generales/TipoEquipo');
+const Equipo = require('../../models/Biomedica/Equipo');
 
 // Obtener todos los tipos de equipo
 router.get('/tiposequipo', async (req, res) => {
@@ -9,6 +10,15 @@ router.get('/tiposequipo', async (req, res) => {
         res.json(tiposEquipos);
     } catch (error) {
         res.status(500).json({ error: 'Error al obtener los tipos de equipo', detalle: error.message });
+    }
+});
+
+router.get('/cantidadequipostipo/:id', async (req, res) => {
+    try {
+        const cantidadEquipos = await Equipo.count({where:{ tipoEquipoIdFk: req.params.id, estadoBaja: false }});
+        res.json(cantidadEquipos);
+    } catch (error) {
+        res.status(500).json({ error: 'Error al obtener los proveedores', detalle: error.message });
     }
 });
 

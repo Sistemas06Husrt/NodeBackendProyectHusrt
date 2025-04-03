@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/configDb');
 const TipoEquipo = require('../generales/TipoEquipo');
 
-const ProtocoloPreventivo = sequelize.define('PRotocoloPreventivo', {
+const ProtocoloPreventivo = sequelize.define('ProtocoloPreventivo', {
     paso: {
         type: DataTypes.TEXT,
         allowNull: false,
@@ -15,6 +15,9 @@ const ProtocoloPreventivo = sequelize.define('PRotocoloPreventivo', {
             key: 'id'
         },
     },
+}, {
+    tableName: 'protocolosPreventivos',
+    timestamps: true,
 });
 
 ProtocoloPreventivo.belongsTo(TipoEquipo, { foreignKey: 'tipoEquipoIdFk', as: 'tipoEquipos' });
