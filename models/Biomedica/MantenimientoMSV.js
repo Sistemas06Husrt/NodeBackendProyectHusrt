@@ -107,6 +107,6 @@ const MantenimientoMSV = sequelize.define('MantenimientoMSV', {
         allowNull: false,
     },
 }, {
-    tableName: 'mantenimientomsv',
+    tableName: 'MantenimientoMSV',
     timestamps: true,
 });

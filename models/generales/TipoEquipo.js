@@ -31,8 +31,12 @@ const TipoEquipo = sequelize.define('TipoEquipo', {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    activo: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+      }
 }, {
-    tableName: 'tipoEquipos',
+    tableName: 'TipoEquipo',
     timestamps: true,
 }
 );

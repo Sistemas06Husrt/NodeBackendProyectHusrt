@@ -30,6 +30,6 @@ const Proveedor = sequelize.define('Proveedor', {
         type: DataTypes.BOOLEAN,
         allowNull: false,
     },
-});
+}, { tableName: 'Proveedor', timestamps: true });
 
 module.exports = Proveedor;

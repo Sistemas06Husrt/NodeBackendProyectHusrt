@@ -21,7 +21,7 @@ const Responsable = sequelize.define('Responsable', {
         allowNull: false,
     }
 }, {
-    tableName: 'responsables',
+    tableName: 'Responsable',
     timestamps: true,
 });
 

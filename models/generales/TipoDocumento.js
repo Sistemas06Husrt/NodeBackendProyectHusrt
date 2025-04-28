@@ -7,7 +7,7 @@ const TipoDocumento = sequelize.define('TipoDocumento', {
       allowNull: false,
     }
   }, {
-    tableName: 'tipoDocumento',
+    tableName: 'TipoDocumento',
     timestamps: true,
   });
 

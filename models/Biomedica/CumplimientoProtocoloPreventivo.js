@@ -24,7 +24,7 @@ const CumplimientoProtocoloPreventivo = sequelize.define('CumpliminetoProtocoloP
             key: 'id'
         },
     }
-});
+}, { tableName: 'CumpliminetoProtocoloPreventivo', timestamps: true });
 
 CumplimientoProtocoloPreventivo.belongsTo(ProtocoloPreventivo, { foreignKey: 'protocoloPreventivoIdFk', as: 'protocolo' });
 ProtocoloPreventivo.hasMany(CumplimientoProtocoloPreventivo, { foreignKey: 'protocoloPreventivoIdFk', as: 'cumplimientoProtocolo' });

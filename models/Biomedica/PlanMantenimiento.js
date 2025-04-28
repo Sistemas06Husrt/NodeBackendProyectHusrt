@@ -24,7 +24,7 @@ const PlanMantenimiento = sequelize.define('PlanMantenimiento', {
         type: DataTypes.INTEGER,
         allowNull: false,
     }
-}, { tableName: 'planes_mantenimiento', timestamps: true });
+}, { tableName: 'PlanMantenimiento', timestamps: true });
 
 Equipo.hasMany(PlanMantenimiento, { foreignKey: 'equipoIdFk', as: 'planesMantenimiento' });
 PlanMantenimiento.belongsTo(Equipo, { foreignKey: 'equipoIdFk', as: 'equipo' });

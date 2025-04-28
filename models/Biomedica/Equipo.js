@@ -26,6 +26,14 @@ const Equipo = sequelize.define('Equipo', {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    registroInvima: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    riesgo: {
+        type: DataTypes.ENUM('NA', 'I', 'IIA', 'IIB', 'III'),
+        allowNull: true
+    },
     ubicacion: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -39,7 +47,12 @@ const Equipo = sequelize.define('Equipo', {
         allowNull: false,
         defaultValue: true,
     },
-    periodicidad: {
+    periodicidadM: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: true,
+    },
+    periodicidadC: {
         type: DataTypes.INTEGER,
         allowNull: false,
         defaultValue: true,
@@ -97,7 +110,7 @@ const Equipo = sequelize.define('Equipo', {
         },
     }
 }, {
-    tableName: 'equipos',
+    tableName: 'Equipo',
     timestamps: true,
 });
 

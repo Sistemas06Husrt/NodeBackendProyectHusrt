@@ -14,6 +14,6 @@ const Fabricante = sequelize.define('fabricante', {
         type: DataTypes.BOOLEAN,
         allowNull: false,
     }
-});
+}, { tableName: 'Fabricante', timestamps: true });
 
 module.exports = Fabricante;

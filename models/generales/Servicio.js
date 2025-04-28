@@ -9,9 +9,13 @@ const Servicio = sequelize.define('Servicio', {
     ubicacion: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    activo: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
     }
   }, {
-    tableName: 'servicios',
+    tableName: 'Servicio',
     timestamps: true,
   });
 

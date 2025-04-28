@@ -35,7 +35,7 @@ const Documento = sequelize.define('Documento', {
     allowNull: false,
   },
 }, {
-  tableName: 'documentos',
+  tableName: 'Documento',
   timestamps: true,
 });
 

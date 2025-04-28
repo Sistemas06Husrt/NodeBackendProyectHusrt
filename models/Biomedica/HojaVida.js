@@ -19,7 +19,7 @@ const HojaVida = sequelize.define('HojaVida', {
         allowNull: true,
     },
     tipoAdquisicion: {
-        type: DataTypes.ENUM('Compra', 'Convenio', 'Donado', 'AsignadoMinisterio', 'AsignadoGovernacion', 'Comodato'),
+        type: DataTypes.ENUM('Compra', 'Convenio', 'Donación', 'Comodato', 'Alquiler'),
         allowNull: true
     },
     fechaCompra: {
@@ -42,23 +42,12 @@ const HojaVida = sequelize.define('HojaVida', {
         type: DataTypes.INTEGER,
         allowNull: true,
     },
-    registroInvima: {
-        type: DataTypes.STRING,
-        allowNull: true,
-    },
-    riesgo: {
-        type: DataTypes.ENUM('NA', 'I', 'IIA', 'IIB', 'III', 'IV'),
-        allowNull: true
-    },
     fuente: {
         type: DataTypes.ENUM('Electricidad', 'Energia Solar', 'Agua', 'Gas', 'Vapor de agua', 'Derivados del petroleo', 'Otra'),
         allowNull: true
     },
-    tipo: {
-        type: DataTypes.ENUM('Medico', 'Basico', 'Apoyo'),
-        allowNull: true
-    },
     tipoUso: {
+                           //('Diagnostico', 'Terapeutico', 'Soporte Vital', 'Quirurgico', 'Equipo de laboratorio', 'Rehabilitacion', 'Gestion y Soporte Hptalario'),
         type: DataTypes.ENUM('Diagnostico', 'Tratamiento', 'Rehabilitacion', 'Prevencion', 'Analisis'),
         allowNull: true
     },
@@ -92,7 +81,7 @@ const HojaVida = sequelize.define('HojaVida', {
     },
     datosTecnicosIdFk: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
             model: DatosTecnicos,
             key: 'id'
@@ -123,7 +112,7 @@ const HojaVida = sequelize.define('HojaVida', {
         },
     },
 }, {
-    tableName: 'hojavida',
+    tableName: 'HojaVida',
     timestamps: true,
 }
 );

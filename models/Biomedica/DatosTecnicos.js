@@ -58,6 +58,6 @@ const DatosTecnicos = sequelize.define('DatosTecnicos', {
         allowNull: false,
         defaultValue: false,
     },
-});
+}, { tableName: 'DatosTecnicos', timestamps: true });
 
 module.exports = DatosTecnicos;

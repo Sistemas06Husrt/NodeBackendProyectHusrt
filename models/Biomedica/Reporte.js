@@ -9,12 +9,12 @@ const Reporte = sequelize.define('Reporte', {
         type: DataTypes.DATEONLY,
         allowNull: false,
     },
-    horaLlamado: {
+    horaInicio: {
         type: DataTypes.TIME,
         allowNull: false,
     },
-    horaInicio: {
-        type: DataTypes.TIME,
+    fechaFin: {
+        type: DataTypes.DATEONLY,
         allowNull: false,
     },
     horaTerminacion: {
@@ -98,7 +98,7 @@ const Reporte = sequelize.define('Reporte', {
         },
     },
 }, {
-    tableName: 'reportes',
+    tableName: 'Reporte',
     timestamps: true,
 });
 Servicio.hasMany(Reporte, { foreignKey: 'servicioIdFk', as: 'reporte' });

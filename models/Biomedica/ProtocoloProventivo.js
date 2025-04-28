@@ -16,7 +16,7 @@ const ProtocoloPreventivo = sequelize.define('ProtocoloPreventivo', {
         },
     },
 }, {
-    tableName: 'protocolosPreventivos',
+    tableName: 'ProtocoloPreventivo',
     timestamps: true,
 });
 

@@ -9,7 +9,7 @@ const Rol = sequelize.define('Rol', {
     unique: true
   }
 }, {
-  tableName: 'roles'
+  tableName: 'Rol'
 });
 
 module.exports = Rol;

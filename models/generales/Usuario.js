@@ -55,7 +55,7 @@ const Usuario = sequelize.define('Usuario', {
     allowNull: false,
   },
 }, {
-  tableName: 'usuarios',
+  tableName: 'Usuario',
   timestamps: true,
 });
 

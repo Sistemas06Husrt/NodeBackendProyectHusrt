@@ -8,7 +8,7 @@ const Repuesto = sequelize.define('Repuesto', {
         allowNull: false,
     }
 }, {
-    tableName: 'repuestos',
+    tableName: 'Repuesto',
     timestamps: true,
 });
 
