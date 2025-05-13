@@ -5,17 +5,25 @@ const Usuario = require('./../generales/Usuario');
 const Servicio = require('./../generales/Servicio');
  
 const Reporte = sequelize.define('Reporte', {
-    fecha: {
+    añoProgramado: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+    },
+    mesProgramado: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+    },
+    fechaRealizado: {
         type: DataTypes.DATEONLY,
-        allowNull: false,
+        allowNull: true,
     },
     horaInicio: {
         type: DataTypes.TIME,
-        allowNull: false,
+        allowNull: true,
     },
     fechaFin: {
         type: DataTypes.DATEONLY,
-        allowNull: false,
+        allowNull: true,
     },
     horaTerminacion: {
         type: DataTypes.TIME,
@@ -30,7 +38,7 @@ const Reporte = sequelize.define('Reporte', {
         allowNull: false
     },
     tipoFalla: {
-        type: DataTypes.ENUM('Desgaste', 'Operacion Indevida', 'Causa Extera', 'Accesorios', 'Desconocido', 'sin Falla', 'Otros'),
+        type: DataTypes.ENUM('Desgaste', 'Operacion Indevida', 'Causa Extera', 'Accesorios', 'Desconocido', 'sin Falla', 'Otros', 'No Registra'),
         allowNull: false
     },
     ubicacion: {
@@ -47,15 +55,15 @@ const Reporte = sequelize.define('Reporte', {
     },
     calificacion: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
     },
     nombreRecibio: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
     cedulaRecibio: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
     observaciones: {
         type: DataTypes.TEXT,
@@ -67,11 +75,11 @@ const Reporte = sequelize.define('Reporte', {
     },
     realizado: {
         type: DataTypes.BOOLEAN,
-        allowNull: false,
+        allowNull: true,
     },
     rutaPdf: {
         type: DataTypes.TEXT,
-        allowNull: false,
+        allowNull: true,
     },
     servicioIdFk: {
         type: DataTypes.INTEGER,
@@ -81,6 +89,7 @@ const Reporte = sequelize.define('Reporte', {
             key: 'id'
         },
     },
+
     equipoIdFk: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -91,7 +100,7 @@ const Reporte = sequelize.define('Reporte', {
     },
     usuarioIdFk: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
             model: Usuario,
             key: 'id'

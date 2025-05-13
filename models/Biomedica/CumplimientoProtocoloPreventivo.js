@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/configDb');
 const Reporte = require('../../models/Biomedica/Reporte');
-const ProtocoloPreventivo = require('../../models/Biomedica/ProtocoloProventivo');
+const ProtocoloPreventivo = require('./ProtocoloPreventivo');
 
 const CumplimientoProtocoloPreventivo = sequelize.define('CumpliminetoProtocoloPreventivo', {
     cumple: {
