@@ -20,12 +20,10 @@ const DatosTecnicos = require('./../routes/biomedica/datosTecnicosRoutes');
 const Reporte = require('./../routes/biomedica/reporteRoutes');
 const ProtocoloPreventivo = require('./../routes/biomedica/protocoloPreventivoRoutes');
 const CumplimientoProtocoloPreventivoRoutes = require('./../routes/biomedica/cumplimiento.ProtocoloPreventivoRoutes');
-//  const CumplimientoProtocoloPreventivo = require('./../routes/biomedica/CumplimientoProtocoloPreventivoRoutes');
 const {checkToken} =  require('./../utilities/middleware');
 const sequelize = require('./../config/configDb');
 
 
-//middlewares
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

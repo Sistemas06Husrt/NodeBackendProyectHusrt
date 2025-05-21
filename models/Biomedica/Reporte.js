@@ -33,6 +33,8 @@ const Reporte = sequelize.define('Reporte', {
         type: DataTypes.TIME,
         allowNull: false,
     },
+
+    // Correctivo Activo y Correctivo Pasivo
     tipoMantenimiento: {
         type: DataTypes.ENUM('Correctivo', 'Preventivo', 'Predictivo'),
         allowNull: false

@@ -5,8 +5,10 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { checkToken } = require('../../utilities/middleware');
 const app = Router();
+const transporter = require('../../utilities/mailer');
 
 const SECRET_KEY = 'aPPHusRT2024';
+const CLIENT_URL = 'http://172.30.40.241:4200/recuperarcontraseña';
 
 app.post('/adduser', async (req, res) => {
   try {
@@ -37,9 +39,9 @@ app.post('/login', async (req, res) => {
   const { usuarion, contraseña } = req.body;
   try {
     const usuario = await Usuario.findOne({
-      where: { nombreUsuario: usuarion }, 
+      where: { nombreUsuario: usuarion },
       include: 'rol'
-  });
+    });
 
     if (!usuario) {
       return res.status(404).json({ error: 'Usuario no encontrado' });
@@ -149,5 +151,54 @@ app.put('/users/update/:id', checkToken, async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 });
+
+
+app.post('/olvidocontrasena', async (req, res) => {
+  const { email } = req.body;
+  try {
+    const user = await Usuario.findOne({ where: { email } });
+    if (!user) return res.status(404).json({ error: 'Usuario no encontrado' });
+    const token = jwt.sign({ id: user.id }, SECRET_KEY, { expiresIn: '15m' });
+
+
+    const link = `${CLIENT_URL}?token=${token}`;
+
+    await transporter.sendMail({
+      from: 'sistemas6@hospitalsanrafaeltunja.gov.co',
+      to: email,
+      subject: 'Recuperación de contraseña AppHusrt',
+      html: `<p>Hola ${user.nombres},</p>
+             <p>Solicitaste el cambio de contraseña de tu usuario de AppHusrt, Haz clic en el siguiente enlace para restablecer tu contraseña:</p>
+             <a href="${link}">${link}</a>
+             <p>Este enlace expirará en 15 minutos.</p>`
+    });
+
+    res.json({ mensaje: 'Correo de recuperación enviado' });
+  } catch (err) {
+    res.status(500).json({ error: 'Error al procesar la solicitud', detalle: err.message });
+  }
+});
+
+
+app.put('/cambiarcontrasena', checkToken, async (req, res) => {
+  const { nuevaContrasena } = req.body;
+
+  if (!req.headers['authorization']) {
+    return res.json({ err: 'token no incluido' });
+  }
+  const token = req.headers['authorization'];
+  try {
+    const decoded = jwt.verify(token, SECRET_KEY);
+    const user = await Usuario.findByPk(decoded.id);
+    if (!user) return res.status(404).json({ error: 'Usuario no encontrado' });
+    const contraseña = await bcrypt.hash(nuevaContrasena, 10);
+    user.contraseña = contraseña;
+    await user.update({ contraseña: user.contraseña });
+    res.json({ mensaje: 'Contraseña actualizada correctamente' });
+  } catch (err) {
+    res.status(400).json({ error: 'Token inválido o expirado', detalle: err.message });
+  }
+});
+
 
 module.exports = app;
