@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+const { Op } = require('sequelize');
 const Reporte = require('../../models/Biomedica/Reporte');
 const Equipo = require('../../models/Biomedica/Equipo');
 const Servicio = require('../../models/generales/Servicio');
@@ -84,6 +84,60 @@ router.get('/reportes/equipo/:id', async (req, res) => {
     res.status(500).json({ error: 'Error al obtener reportes por equipo', detalle: error.message });
   }
 });
+
+router.post('/reportes/preventivosmes', async (req, res) => {
+  try {
+    const { mes, anio } = req.body;
+    if (!mes || !anio) {
+      return res.status(400).json({ error: 'Se requieren los parámetros mes y anio' });
+    }
+
+    const reportes = await Reporte.findAll({
+      where: {
+        tipoMantenimiento: 'Preventivo',
+        mesProgramado: parseInt(mes),
+        añoProgramado: parseInt(anio),
+      },
+      include: ['equipo', 'servicio', 'usuario'],
+    });
+
+    res.json(reportes);
+  } catch (error) {
+    res.status(500).json({ error: 'Error al obtener reportes preventivos programados', detalle: error.message });
+  }
+});
+
+
+// Correctivos en rango de fecha
+router.post('/reportes/correctivosmes', async (req, res) => {
+  try {
+    const { mes, anio } = req.body;
+
+    if (!mes || !anio) {
+      return res.status(400).json({ error: 'Debe proporcionar mes y año en el cuerpo de la solicitud' });
+    }
+
+    // Crear rango de fechas para el mes y año indicados
+    const fechaInicio = new Date(anio, mes - 1, 1); // primer día del mes
+    const fechaFin = new Date(anio, mes, 0);        // último día del mes
+
+    console.log(`Buscando reportes correctivos desde ${fechaInicio} hasta ${fechaFin}`);
+    const reportes = await Reporte.findAll({
+      where: {
+        fechaRealizado: {
+          [Op.between]: [fechaInicio.toISOString().split('T')[0], fechaFin.toISOString().split('T')[0]],
+        },
+      },
+      include: ['equipo', 'servicio', 'usuario'],
+    });
+
+    res.json(reportes);
+  } catch (error) {
+    res.status(500).json({ error: 'Error al obtener reportes por fecha realizada', detalle: error.message });
+  }
+});
+
+
 
 // Obtener reportes por servicio
 router.get('/reportes/servicio/:id', async (req, res) => {

@@ -27,33 +27,33 @@ const Reporte = sequelize.define('Reporte', {
     },
     horaTerminacion: {
         type: DataTypes.TIME,
-        allowNull: false,
+        allowNull: true,
     },
     horaTotal: {
         type: DataTypes.TIME,
-        allowNull: false,
+        allowNull: true,
     },
 
     // Correctivo Activo y Correctivo Pasivo
     tipoMantenimiento: {
-        type: DataTypes.ENUM('Correctivo', 'Preventivo', 'Predictivo'),
-        allowNull: false
+        type: DataTypes.ENUM('Correctivo', 'Preventivo', 'Predictivo', 'Otro'),
+        allowNull: true
     },
     tipoFalla: {
-        type: DataTypes.ENUM('Desgaste', 'Operacion Indevida', 'Causa Extera', 'Accesorios', 'Desconocido', 'sin Falla', 'Otros', 'No Registra'),
-        allowNull: false
+        type: DataTypes.ENUM('Desgaste', 'Operación Indebida', 'Causa Externa', 'Accesorios', 'Desconocido', 'Sin Falla', 'Otros', 'No Registra'),
+        allowNull: true
     },
     ubicacion: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
     motivo: {
         type: DataTypes.TEXT,
-        allowNull: false,
+        allowNull: true,
     },
     trabajoRealizado: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
     calificacion: {
         type: DataTypes.INTEGER,
@@ -69,11 +69,11 @@ const Reporte = sequelize.define('Reporte', {
     },
     observaciones: {
         type: DataTypes.TEXT,
-        allowNull: false,
+        allowNull: true,
     },
     mantenimientoPropio: {
         type: DataTypes.BOOLEAN,
-        allowNull: false,
+        allowNull: true,
     },
     realizado: {
         type: DataTypes.BOOLEAN,

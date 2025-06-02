@@ -16,7 +16,6 @@ const Documento = sequelize.define('Documento', {
   activo: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
-    unique: true,
   },
   equipoIdFk: {
     type: DataTypes.INTEGER,
