@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const HojaVida = require('../../models/Biomedica/HojaVida');
 const Equipo = require('../../models/Biomedica/Equipo');
+const DatosTecnicos = require('../../models/Biomedica/DatosTecnicos');
+const Servicio = require('../../models/generales/Servicio');
 
 // Obtener todas las hojas de vida
 router.get('/hojasvida', async (req, res) => {
@@ -69,5 +71,47 @@ router.delete('/hojasvida/:id', async (req, res) => {
         res.status(500).json({ error: 'Error al eliminar la hoja de vida', detalle: error.message });
     }
 });
+
+// GET /equipos/:id/hojavida
+router.get('/hojavidaequipo/:id', async (req, res) => {
+    const equipoId = parseInt(req.params.id, 10);
+
+    if (isNaN(equipoId)) {
+        return res.status(400).json({ error: 'ID de equipo inválido' });
+    }
+
+    try {
+        const hojaVida = await HojaVida.findOne({
+            where: { equipoIdFk: equipoId },
+            include: [
+                {
+                    model: Equipo,
+                    as: 'equipo',
+                    include: [
+                        {
+                            model: Servicio, // ajusta si tu ruta al modelo es distinta
+                            as: 'servicios'
+                        }
+                    ]
+                },
+                {
+                    model: DatosTecnicos,
+                    as: 'datosTecnicos'
+                }
+            ]
+        });
+
+        if (!hojaVida) {
+            return res.status(404).json({ error: 'Hoja de vida no encontrada para este equipo' });
+        }
+
+        res.json(hojaVida);
+    } catch (error) {
+        console.error('Error al obtener hoja de vida por ID de equipo:', error);
+        res.status(500).json({ error: 'Error del servidor', detalle: error.message });
+    }
+});
+
+
 
 module.exports = router;

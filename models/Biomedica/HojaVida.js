@@ -5,6 +5,7 @@ const Proveedor = require('./Proveedor');
 const Fabricante = require('./Fabricante');
 const DatosTecnicos = require('./DatosTecnicos');
 
+
 const HojaVida = sequelize.define('HojaVida', {
     codigoInternacional: {
         type: DataTypes.STRING,
@@ -19,7 +20,7 @@ const HojaVida = sequelize.define('HojaVida', {
         allowNull: true,
     },
     tipoAdquisicion: {
-        type: DataTypes.ENUM('Compra', 'Convenio', 'Donación', 'Comodato', 'Alquiler'),
+        type: DataTypes.ENUM('Compra', 'Convenio', 'Donación', 'Comodato', 'Alquiler', 'NR'),
         allowNull: true
     },
     fechaCompra: {
@@ -47,12 +48,12 @@ const HojaVida = sequelize.define('HojaVida', {
         allowNull: true
     },
     tipoUso: {
-                           //('Diagnostico', 'Terapeutico', 'Soporte Vital', 'Quirurgico', 'Equipo de laboratorio', 'Rehabilitacion', 'Gestion y Soporte Hptalario'),
-        type: DataTypes.ENUM('Diagnostico', 'Tratamiento', 'Rehabilitacion', 'Prevencion', 'Analisis'),
+                           //('Diagnostico', 'Terapeutico', 'Soporte Vital', 'Quirurgico', 'Equipo de laboratorio', 'Rehabilitacion', 'Gestion y Soporte Hospitalario'),
+        type: DataTypes.ENUM('Diagnostico', 'Terapéutico', 'Soporte Vital', 'Quirúrgico', 'Equipo de laboratorio', 'Rehabilitación', 'Gestión y Soporte Hospitalario', 'NR'),
         allowNull: true
     },
     clase: {
-        type: DataTypes.ENUM('Electrico', 'Electronico', 'Mecanico', 'Electromecanico', 'Hidraulico', 'Neumatico', 'Vapor', 'Solar'),
+        type: DataTypes.ENUM('Electrico', 'Electronico', 'Mecanico', 'Electromecanico', 'Hidraulico', 'Neumatico', 'Vapor', 'Solar', 'Otro'),
         allowNull: true
     },
     mantenimiento: {
@@ -89,7 +90,7 @@ const HojaVida = sequelize.define('HojaVida', {
     },
     equipoIdFk: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
             model: Equipo,
             key: 'id'
@@ -97,7 +98,7 @@ const HojaVida = sequelize.define('HojaVida', {
     },
     fabricanteIdFk: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
             model: Fabricante,
             key: 'id'
@@ -105,7 +106,7 @@ const HojaVida = sequelize.define('HojaVida', {
     },
     proveedorIdFk: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
             model: Proveedor,
             key: 'id'
@@ -128,3 +129,5 @@ HojaVida.belongsTo(Proveedor, { foreignKey: 'proveedorIdFk', as: 'proveedor' });
 
 DatosTecnicos.hasOne(HojaVida, { foreignKey: 'datosTecnicosIdFk', as: 'hojaVida' });
 HojaVida.belongsTo(DatosTecnicos, { foreignKey: 'datosTecnicosIdFk', as: 'datosTecnicos' });
+
+module.exports = HojaVida;
