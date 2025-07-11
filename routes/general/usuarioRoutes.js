@@ -200,5 +200,24 @@ app.put('/cambiarcontrasena', checkToken, async (req, res) => {
   }
 });
 
+app.get('/nombreusuario/:id', checkToken, async (req, res) => {
+  try {
+    const usuario = await Usuario.findByPk(req.params.id, {
+      attributes: ['nombres', 'apellidos', 'tipoId', 'numeroId']
+    });
+
+    if (!usuario) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+
+    res.json({
+      nombreCompleto: `${usuario.nombres} ${usuario.apellidos}`,
+      numeroId:  `${usuario.numeroId}`
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Error al obtener el nombre del usuario', detalle: error.message });
+  }
+});
+
 
 module.exports = app;

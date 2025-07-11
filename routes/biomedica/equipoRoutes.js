@@ -142,4 +142,21 @@ router.delete('/remequipo/:id', async (req, res) => {
     }
 });
 
+router.get('/seriesequipos', async (req, res) => {
+  try {
+    const equipos = await Equipo.findAll({
+      where: { estadoBaja: false },  
+      attributes: ['id', 'serie']
+    });
+
+    if (!equipos) {
+      return res.status(404).json({ error: 'Equipos no encontrados' });
+    }
+
+    res.json(equipos);
+  } catch (error) {
+    res.status(500).json({ error: 'Error al obtener los datos de los equipos', detalle: error.message });
+  }
+});
+
 module.exports = router;

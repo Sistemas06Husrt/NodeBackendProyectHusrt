@@ -22,7 +22,6 @@ router.get('/protocolos/tipoequipo/:idtipo', async (req, res) => {
     try {
         const protocolos = await ProtocoloPreventivo.findAll({
             where: { tipoEquipoIdFk: req.params.idtipo },
-            include: [{ model: TipoEquipo, as: 'tipoEquipos' }],
             order: [['id', 'ASC']]
         });
         res.json(protocolos);

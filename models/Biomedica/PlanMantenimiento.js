@@ -28,3 +28,5 @@ const PlanMantenimiento = sequelize.define('PlanMantenimiento', {
 
 Equipo.hasMany(PlanMantenimiento, { foreignKey: 'equipoIdFk', as: 'planesMantenimiento' });
 PlanMantenimiento.belongsTo(Equipo, { foreignKey: 'equipoIdFk', as: 'equipo' });
+
+module.exports = PlanMantenimiento;

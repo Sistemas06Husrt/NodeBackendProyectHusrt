@@ -4,10 +4,9 @@ const PlanMantenimiento = require('../../models/Biomedica/PlanMantenimiento');
 const Equipo = require('../../models/Biomedica/Equipo');
 
 // Obtener todos los planes de mantenimiento
-router.get('/', async (req, res) => {
+router.get('/planmantenimiento/', async (req, res) => {
     try {
         const planes = await PlanMantenimiento.findAll({
-            include: [{ model: Equipo, as: 'equipo' }],
         });
         res.json(planes);
     } catch (error) {
@@ -16,10 +15,9 @@ router.get('/', async (req, res) => {
 });
 
 // Obtener un plan de mantenimiento por ID
-router.get('/:id', async (req, res) => {
+router.get('/planmantenimiento/:id', async (req, res) => {
     try {
         const plan = await PlanMantenimiento.findByPk(req.params.id, {
-            include: [{ model: Equipo, as: 'equipo' }],
         });
         if (!plan) {
             return res.status(404).json({ error: 'Plan de mantenimiento no encontrado' });
@@ -30,8 +28,22 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+router.get('/planmantenimientoequipo/:equipoId', async (req, res) => {
+    try {
+        const planes = await PlanMantenimiento.findAll({
+            where: { equipoIdFk: req.params.equipoId },
+        });
+        if (planes.length === 0) {
+            return res.status(404).json({ error: 'No se encontraron planes de mantenimiento para este equipo' });
+        }
+        res.json(planes);
+    } catch (error) {
+        res.status(500).json({ error: 'Error al obtener los planes de mantenimiento del equipo', detalle: error.message });
+    }
+});
+
 // Crear un nuevo plan de mantenimiento
-router.post('/', async (req, res) => {
+router.post('/planmantenimiento/', async (req, res) => {
     try {
         const nuevoPlan = await PlanMantenimiento.create(req.body);
         res.status(201).json(nuevoPlan);
@@ -40,8 +52,34 @@ router.post('/', async (req, res) => {
     }
 });
 
+router.post('/planmantenimientomes', async (req, res) => {
+    try {
+        const { mes, ano } = req.body;
+
+        if (!mes || !ano) {
+            return res.status(400).json({ error: 'Mes y año son requeridos' });
+        }
+
+        const planes = await PlanMantenimiento.findAll({
+            where: {
+                mes: parseInt(mes),
+                ano: parseInt(ano)
+            },
+            include: [{ model: Equipo, as: 'equipo' }]
+        });
+
+        if (planes.length === 0) {
+            return res.status(404).json({ error: 'No se encontraron planes de mantenimiento para el mes y año especificados' });
+        }
+
+        res.json(planes);
+    } catch (error) {
+        res.status(500).json({ error: 'Error al obtener los planes de mantenimiento mensuales', detalle: error.message });
+    }
+});
+
 // Actualizar un plan de mantenimiento por ID
-router.put('/:id', async (req, res) => {
+router.put('/planmantenimiento/:id', async (req, res) => {
     try {
         const plan = await PlanMantenimiento.findByPk(req.params.id);
         if (!plan) {
@@ -56,7 +94,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // Eliminar un plan de mantenimiento por ID
-router.delete('/:id', async (req, res) => {
+router.delete('/planmantenimiento/:id', async (req, res) => {
     try {
         const plan = await PlanMantenimiento.findByPk(req.params.id);
         if (!plan) {

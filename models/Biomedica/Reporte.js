@@ -43,10 +43,6 @@ const Reporte = sequelize.define('Reporte', {
         type: DataTypes.ENUM('Desgaste', 'Operación Indebida', 'Causa Externa', 'Accesorios', 'Desconocido', 'Sin Falla', 'Otros', 'No Registra'),
         allowNull: true
     },
-    ubicacion: {
-        type: DataTypes.STRING,
-        allowNull: true,
-    },
     motivo: {
         type: DataTypes.TEXT,
         allowNull: true,

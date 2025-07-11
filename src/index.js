@@ -19,6 +19,7 @@ const Fabricante = require('./../routes/biomedica/fabricanteRoutes');
 const DatosTecnicos = require('./../routes/biomedica/datosTecnicosRoutes');
 const Reporte = require('./../routes/biomedica/reporteRoutes');
 const ProtocoloPreventivo = require('./../routes/biomedica/protocoloPreventivoRoutes');
+const ProgramacionMantenimiento = require('./../routes/biomedica/programacionMantenimientoRoutes');
 const CumplimientoProtocoloPreventivoRoutes = require('./../routes/biomedica/cumplimiento.ProtocoloPreventivoRoutes');
 const {checkToken} =  require('./../utilities/middleware');
 const sequelize = require('./../config/configDb');
@@ -47,6 +48,7 @@ app.use(DatosTecnicos, checkToken);
 app.use(Reporte, checkToken);
 app.use(ProtocoloPreventivo, checkToken);
 app.use(CumplimientoProtocoloPreventivoRoutes, checkToken);
+app.use(ProgramacionMantenimiento, checkToken);
 
 sequelize.sync()
   .then(() => {

@@ -107,7 +107,6 @@ router.post('/reportes/preventivosmes', async (req, res) => {
   }
 });
 
-
 // Correctivos en rango de fecha
 router.post('/reportes/correctivosmes', async (req, res) => {
   try {
@@ -117,11 +116,9 @@ router.post('/reportes/correctivosmes', async (req, res) => {
       return res.status(400).json({ error: 'Debe proporcionar mes y año en el cuerpo de la solicitud' });
     }
 
-    // Crear rango de fechas para el mes y año indicados
-    const fechaInicio = new Date(anio, mes - 1, 1); // primer día del mes
-    const fechaFin = new Date(anio, mes, 0);        // último día del mes
+    const fechaInicio = new Date(anio, mes - 1, 1);
+    const fechaFin = new Date(anio, mes, 0);
 
-    console.log(`Buscando reportes correctivos desde ${fechaInicio} hasta ${fechaFin}`);
     const reportes = await Reporte.findAll({
       where: {
         fechaRealizado: {
@@ -153,6 +150,18 @@ router.get('/reportes/servicio/:id', async (req, res) => {
 });
 
 // Obtener reportes por usuario
+router.get('/reportes/usuario/:id', async (req, res) => {
+  try {
+    const reportes = await Reporte.findAll({
+      where: { usuarioIdFk: req.params.id },
+      include: ['equipo', 'servicio', 'usuario']
+    });
+    res.json(reportes);
+  } catch (error) {
+    res.status(500).json({ error: 'Error al obtener reportes por usuario', detalle: error.message });
+  }
+});
+
 router.get('/reportes/usuario/:id', async (req, res) => {
   try {
     const reportes = await Reporte.findAll({
