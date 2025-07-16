@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Equipo = require('../../models/Biomedica/Equipo');
 const Usuario = require('../../models/generales/Usuario');
+const Servicio = require('../../models/generales/Servicio'); 
 const ActividadMetrologica = require('../../models/Biomedica/ActividadMetrologica');
 
 
@@ -74,7 +75,7 @@ router.delete('/remactividad/:id', async (req, res) => {
 });
 
 // Obtener actividades por equipo
-router.get('/actividades/equipo/:id', async (req, res) => {
+router.get('/actividadesequipo/:id', async (req, res) => {
   try {
     const actividades = await ActividadMetrologica.findAll({
       where: { equipoIdFk: req.params.id },
@@ -102,6 +103,42 @@ router.get('/actividades/usuario/:id', async (req, res) => {
     res.json(actividades);
   } catch (error) {
     res.status(500).json({ error: 'Error al obtener actividades por usuario', detalle: error.message });
+  }
+});
+
+router.post('/reportesMetrologicosmes', async (req, res) => {
+  try {
+    const { mes, anio } = req.body;
+    if (!mes || !anio) {
+      return res.status(400).json({ error: 'Se requieren los parámetros mes y anio' });
+    }
+
+    const actividades = await ActividadMetrologica.findAll({
+      where: {
+        mesProgramado: parseInt(mes),
+        añoProgramado: parseInt(anio),
+      },
+      include: [
+    {
+      model: Equipo,
+      as: 'equipo',
+      include: [
+        {
+          model: Servicio,
+          as: 'servicios' // ⚠️ Usa el alias correcto según tu modelo
+        }
+      ]
+    },
+    {
+      model: Usuario,
+      as: 'usuarioAprobo' // ⚠️ Asegúrate de que este alias también esté bien definido
+    }
+  ],
+    });
+
+    res.json(actividades);
+  } catch (error) {
+    res.status(500).json({ error: 'Error al obtener reportes de actividades metrologicas en el periodo seleccionado', detalle: error.message });
   }
 });
 

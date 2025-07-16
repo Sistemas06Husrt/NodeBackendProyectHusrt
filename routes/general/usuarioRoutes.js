@@ -6,6 +6,7 @@ const bcrypt = require('bcryptjs');
 const { checkToken } = require('../../utilities/middleware');
 const app = Router();
 const transporter = require('../../utilities/mailer');
+const generarPDF = require('../../utilities/crearPDF');
 
 const SECRET_KEY = 'aPPHusRT2024';
 const CLIENT_URL = 'http://172.30.40.241:4200/recuperarcontraseña';
@@ -36,6 +37,7 @@ app.post('/adduser', async (req, res) => {
 
 
 app.post('/login', async (req, res) => {
+  generarPDF();
   const { usuarion, contraseña } = req.body;
   try {
     const usuario = await Usuario.findOne({
@@ -59,6 +61,7 @@ app.post('/login', async (req, res) => {
         token: token,
         idUser: usuario.id
       });
+
     } else {
       return res.status(404).json({ error: 'Usuario Inactivo' });
     }

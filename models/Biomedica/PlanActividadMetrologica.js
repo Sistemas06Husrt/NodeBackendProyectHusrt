@@ -18,10 +18,12 @@ const PlanActividadMetrologica = sequelize.define('PlanActividadMetrologica', {
         allowNull: false,
     },
     tipoActividad: {
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM('Calibración', 'Calificación', 'Validación', 'Confirmación Metrológica'),
         allowNull: false,
     }
-}, { tableName: 'PlanActividadMetrologica', timestamps: true });
+}, { tableName: 'planActividadMetrologica', timestamps: true });
 
 Equipo.hasMany(PlanActividadMetrologica, { foreignKey: 'equipoIdFk', as: 'planActividadMetrologica' });
 PlanActividadMetrologica.belongsTo(Equipo, { foreignKey: 'equipoIdFk', as: 'equipo' });
+
+module.exports = PlanActividadMetrologica;

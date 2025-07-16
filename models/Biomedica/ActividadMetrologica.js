@@ -9,17 +9,28 @@ const ActividadMetrologica = sequelize.define('ActividadMetrologica',{
         type: DataTypes.ENUM('Calibración', 'Calificación', 'Validación', 'Confirmación Metrológica'),
         allowNull: false,
     },
-    fecha: {
-        type: DataTypes.DATE,
+
+    mesProgramado: {
+        type: DataTypes.INTEGER,
         allowNull: false,
+    },
+
+    añoProgramado: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
+
+    fechaRealizado: {
+        type: DataTypes.DATE,
+        allowNull: true,
     },
     empresa:{
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
     errorMaximoIdentificado: {
         type: DataTypes.DOUBLE,
-        allowNull: false,
+        allowNull: true,
     },
     observaciones: {
         type: DataTypes.STRING,
@@ -27,8 +38,13 @@ const ActividadMetrologica = sequelize.define('ActividadMetrologica',{
     },
     resultado: {
         type: DataTypes.ENUM('Cumple', 'No Cumple', 'No Aplica'),
+        allowNull: true,
+    },
+    realizado:{
+        type: DataTypes.BOOLEAN,
         allowNull: false,
     },
+
     rutaReporte:{
         type: DataTypes.STRING,
         allowNull: true,

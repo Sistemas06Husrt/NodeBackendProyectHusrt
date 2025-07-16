@@ -39,12 +39,12 @@ const Usuario = sequelize.define('Usuario', {
   },
   registroInvima: {
     type: DataTypes.STRING,
-    allowNull: false,
-    unique: false,
+    allowNull: true
   },
   estado: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
+    defaultValue: true
   },
   rolId: {
     type: DataTypes.INTEGER,

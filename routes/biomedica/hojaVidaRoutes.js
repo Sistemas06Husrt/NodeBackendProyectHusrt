@@ -72,7 +72,6 @@ router.delete('/hojasvida/:id', async (req, res) => {
     }
 });
 
-// GET /equipos/:id/hojavida
 router.get('/hojavidaequipo/:id', async (req, res) => {
     const equipoId = parseInt(req.params.id, 10);
 

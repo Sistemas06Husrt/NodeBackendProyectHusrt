@@ -17,6 +17,8 @@ const planMantenimiento = require('./../routes/biomedica/planMantenimientoRoutes
 const Proveedor = require('./../routes/biomedica/proveedorRoutes');
 const Fabricante = require('./../routes/biomedica/fabricanteRoutes');
 const DatosTecnicos = require('./../routes/biomedica/datosTecnicosRoutes');
+const PlanActividadMetrologica = require('./../routes/biomedica/planMetrologiaRoutes');
+const ActividadMetrologica = require('./../routes/biomedica/actividadMetrologicaRoutes');
 const Reporte = require('./../routes/biomedica/reporteRoutes');
 const ProtocoloPreventivo = require('./../routes/biomedica/protocoloPreventivoRoutes');
 const ProgramacionMantenimiento = require('./../routes/biomedica/programacionMantenimientoRoutes');
@@ -49,6 +51,8 @@ app.use(Reporte, checkToken);
 app.use(ProtocoloPreventivo, checkToken);
 app.use(CumplimientoProtocoloPreventivoRoutes, checkToken);
 app.use(ProgramacionMantenimiento, checkToken);
+app.use(PlanActividadMetrologica, checkToken);
+app.use(ActividadMetrologica, checkToken);
 
 sequelize.sync()
   .then(() => {
