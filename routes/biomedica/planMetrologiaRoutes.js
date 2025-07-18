@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const PlanActividadMetrologica = require('../../models/Biomedica/PlanActividadMetrologica');
 const Equipo = require('../../models/Biomedica/Equipo');
+const Servicio = require('../../models/generales/Servicio');
 
 // Obtener todos los planes de actividad metrológica
 router.get('/planactividadmetrologica', async (req, res) => {
@@ -43,7 +44,7 @@ router.get('/planmetrologiaequipo/:equipoId', async (req, res) => {
 });
 
 // Obtener planes por mes y año
-router.post('/planactividadmetrologica/mes', async (req, res) => {
+router.post('/planactividadmetrologicames', async (req, res) => {
     try {
         const { mes, ano } = req.body;
         if (!mes || !ano) {
@@ -101,6 +102,59 @@ router.delete('/planactividadmetrologica/:id', async (req, res) => {
         res.json({ mensaje: 'Plan eliminado correctamente' });
     } catch (error) {
         res.status(500).json({ error: 'Error al eliminar el plan', detalle: error.message });
+    }
+});
+
+// Plan de Actividades Metrologicas completo de un tipo de equipo
+router.get('/planametrologicastipoequipo/:idtipoequipo', async (req, res) => {
+    try {
+        const tipoEquipoId = req.params.idtipoequipo;
+
+        if (!tipoEquipoId) {
+            return res.status(400).json({ error: 'El parámetro tipoEquipoId es requerido' });
+        }
+        const planes = await PlanActividadMetrologica.findAll({
+            include: {
+                model: Equipo,
+                as: 'equipo',
+                required: true,
+                where: { tipoEquipoIdFk: tipoEquipoId },
+                include: { model: Servicio, as: 'servicios' }
+            }
+        });
+        res.json(planes);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            error: 'Error al obtener los planes de actividades metrológicas',
+            detalle: error.message
+        });
+    }
+});
+
+// Plan de Actividades metrologicas completo de un servicio
+router.get('/planametrologicasservicio/:idservicio', async (req, res) => {
+    try {
+        const servicioId = req.params.idservicio;
+        if (!servicioId) {
+            return res.status(400).json({ error: 'El parámetro ServicioId es requerido' });
+        }
+        const planes = await PlanActividadMetrologica.findAll({
+            include: {
+                model: Equipo,
+                as: 'equipo',
+                required: true,
+                where: { servicioIdFk: servicioId },
+                include: { model: Servicio, as: 'servicios' }
+            }
+        });
+        res.json(planes);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            error: 'Error al obtener los planes de actividades metrológicas',
+            detalle: error.message
+        });
     }
 });
 

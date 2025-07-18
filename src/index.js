@@ -22,6 +22,7 @@ const ActividadMetrologica = require('./../routes/biomedica/actividadMetrologica
 const Reporte = require('./../routes/biomedica/reporteRoutes');
 const ProtocoloPreventivo = require('./../routes/biomedica/protocoloPreventivoRoutes');
 const ProgramacionMantenimiento = require('./../routes/biomedica/programacionMantenimientoRoutes');
+const ProgramacionAmetrologicas = require('./../routes/biomedica/programacionAMetrologicasRoutes');
 const CumplimientoProtocoloPreventivoRoutes = require('./../routes/biomedica/cumplimiento.ProtocoloPreventivoRoutes');
 const {checkToken} =  require('./../utilities/middleware');
 const sequelize = require('./../config/configDb');
@@ -51,6 +52,7 @@ app.use(Reporte, checkToken);
 app.use(ProtocoloPreventivo, checkToken);
 app.use(CumplimientoProtocoloPreventivoRoutes, checkToken);
 app.use(ProgramacionMantenimiento, checkToken);
+app.use(ProgramacionAmetrologicas, checkToken);
 app.use(PlanActividadMetrologica, checkToken);
 app.use(ActividadMetrologica, checkToken);
 

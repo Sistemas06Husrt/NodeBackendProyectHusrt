@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const PlanMantenimiento = require('../../models/Biomedica/PlanMantenimiento');
+const Servicio = require('../../models/generales/Servicio');
 const Equipo = require('../../models/Biomedica/Equipo');
 
 // Obtener todos los planes de mantenimiento
@@ -59,7 +60,6 @@ router.post('/planmantenimientomes', async (req, res) => {
         if (!mes || !ano) {
             return res.status(400).json({ error: 'Mes y año son requeridos' });
         }
-
         const planes = await PlanMantenimiento.findAll({
             where: {
                 mes: parseInt(mes),
@@ -67,11 +67,9 @@ router.post('/planmantenimientomes', async (req, res) => {
             },
             include: [{ model: Equipo, as: 'equipo' }]
         });
-
         if (planes.length === 0) {
             return res.status(404).json({ error: 'No se encontraron planes de mantenimiento para el mes y año especificados' });
         }
-
         res.json(planes);
     } catch (error) {
         res.status(500).json({ error: 'Error al obtener los planes de mantenimiento mensuales', detalle: error.message });
@@ -85,13 +83,13 @@ router.put('/planmantenimiento/:id', async (req, res) => {
         if (!plan) {
             return res.status(404).json({ error: 'Plan de mantenimiento no encontrado' });
         }
-
         await plan.update(req.body);
         res.json(plan);
     } catch (error) {
         res.status(500).json({ error: 'Error al actualizar el plan de mantenimiento', detalle: error.message });
     }
 });
+
 
 // Eliminar un plan de mantenimiento por ID
 router.delete('/planmantenimiento/:id', async (req, res) => {
@@ -100,12 +98,66 @@ router.delete('/planmantenimiento/:id', async (req, res) => {
         if (!plan) {
             return res.status(404).json({ error: 'Plan de mantenimiento no encontrado' });
         }
-
         await plan.destroy();
         res.json({ mensaje: 'Plan de mantenimiento eliminado correctamente' });
     } catch (error) {
         res.status(500).json({ error: 'Error al eliminar el plan de mantenimiento', detalle: error.message });
     }
 });
+
+// Plan de mantenimineto completo de un servicio
+router.get('/planmantenimientoservicio/:idservicio', async (req, res) => {
+    try {
+        const servicioId = req.params.idservicio;
+
+        if (!servicioId) {
+            return res.status(400).json({ error: 'El parámetro servicioId es requerido' });
+        }
+        const planes = await PlanMantenimiento.findAll({
+            include: {
+                model: Equipo,
+                as: 'equipo',
+                required: true,
+                where: { servicioIdFk: servicioId },
+                include: { model: Servicio, as: 'servicios' }
+            }
+        });
+        res.json(planes);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            error: 'Error al obtener los planes de mantenimiento',
+            detalle: error.message
+        });
+    }
+});
+
+// Plan de mantenimineto completo de un tipo de equipo
+router.get('/planmantenimientotipoequipo/:idtipoequipo', async (req, res) => {
+    try {
+        const tipoEquipoId = req.params.idtipoequipo;
+
+        if (!tipoEquipoId) {
+            return res.status(400).json({ error: 'El parámetro tipoEquipoId es requerido' });
+        }
+        const planes = await PlanMantenimiento.findAll({
+            include: {
+                model: Equipo,
+                as: 'equipo',
+                required: true,
+                where: { tipoEquipoIdFk: tipoEquipoId },
+                include: { model: Servicio, as: 'servicios' }
+            }
+        });
+        res.json(planes);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            error: 'Error al obtener los planes de mantenimiento',
+            detalle: error.message
+        });
+    }
+});
+
 
 module.exports = router;

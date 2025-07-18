@@ -51,7 +51,6 @@ router.post('/programacionpreventivos', async (req, res) => {
 });
 
 
-
 router.post('/programacionpreventivosresponsabletest', async (req, res) => {
   const reportes = [];
   try {
@@ -68,7 +67,6 @@ router.post('/programacionpreventivosresponsabletest', async (req, res) => {
         tipoMantenimiento: 'Preventivo'
       }
     });
-
     if (validarReportes.length > 0) {
       return res.status(400).json({ error: 'Ya se realizó la programación de mantenimientos para el mes seleccionado' });
     }

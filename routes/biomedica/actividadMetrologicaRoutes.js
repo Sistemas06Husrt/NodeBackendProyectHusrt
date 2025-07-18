@@ -125,7 +125,7 @@ router.post('/reportesMetrologicosmes', async (req, res) => {
       include: [
         {
           model: Servicio,
-          as: 'servicios' // ⚠️ Usa el alias correcto según tu modelo
+          as: 'servicios'
         }
       ]
     },

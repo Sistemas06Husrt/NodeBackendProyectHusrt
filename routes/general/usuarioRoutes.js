@@ -9,7 +9,7 @@ const transporter = require('../../utilities/mailer');
 const generarPDF = require('../../utilities/crearPDF');
 
 const SECRET_KEY = 'aPPHusRT2024';
-const CLIENT_URL = 'http://172.30.40.241:4200/recuperarcontraseña';
+const CLIENT_URL = 'http://172.30.40.162:4200/recuperarcontraseña';
 
 app.post('/adduser', async (req, res) => {
   try {
