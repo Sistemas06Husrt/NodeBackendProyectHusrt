@@ -65,11 +65,8 @@ router.post('/planmantenimientomes', async (req, res) => {
                 mes: parseInt(mes),
                 ano: parseInt(ano)
             },
-            include: [{ model: Equipo, as: 'equipo' }]
+            include: [{ model: Equipo, as: 'equipo', include: { model: Servicio, as: 'servicios' } }]
         });
-        if (planes.length === 0) {
-            return res.status(404).json({ error: 'No se encontraron planes de mantenimiento para el mes y año especificados' });
-        }
         res.json(planes);
     } catch (error) {
         res.status(500).json({ error: 'Error al obtener los planes de mantenimiento mensuales', detalle: error.message });

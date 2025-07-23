@@ -56,7 +56,7 @@ router.post('/planactividadmetrologicames', async (req, res) => {
                 mes: parseInt(mes),
                 ano: parseInt(ano)
             },
-            include: [{ model: Equipo, as: 'equipo' }]
+            include: [{ model: Equipo, as: 'equipo', include: { model: Servicio, as: 'servicios' } }]
         });
 
         res.json(planes);

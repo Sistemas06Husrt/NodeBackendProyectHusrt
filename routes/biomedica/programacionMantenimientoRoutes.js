@@ -51,7 +51,7 @@ router.post('/programacionpreventivos', async (req, res) => {
 });
 
 
-router.post('/programacionpreventivosresponsabletest', async (req, res) => {
+router.post('/programacionpreventivosresponsable', async (req, res) => {
   const reportes = [];
   try {
     const { mes, anio } = req.body;
