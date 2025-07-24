@@ -34,9 +34,6 @@ router.get('/planmantenimientoequipo/:equipoId', async (req, res) => {
         const planes = await PlanMantenimiento.findAll({
             where: { equipoIdFk: req.params.equipoId },
         });
-        if (planes.length === 0) {
-            return res.status(404).json({ error: 'No se encontraron planes de mantenimiento para este equipo' });
-        }
         res.json(planes);
     } catch (error) {
         res.status(500).json({ error: 'Error al obtener los planes de mantenimiento del equipo', detalle: error.message });

@@ -26,6 +26,8 @@ const ProgramacionAmetrologicas = require('./../routes/biomedica/programacionAMe
 const CumplimientoProtocoloPreventivoRoutes = require('./../routes/biomedica/cumplimiento.ProtocoloPreventivoRoutes');
 const {checkToken} =  require('./../utilities/middleware');
 const sequelize = require('./../config/configDb');
+const imagenesRoutes = require('./../routes/general/imagenesRoutes');
+const archivosRoutes = require('./../routes/general/archivosRoutes');
 
 
 app.use(morgan('dev'));
@@ -35,7 +37,8 @@ app.use(cors());
 
 app.use(rolRoutes);
 app.use(usuarioRoutes);
-
+app.use(imagenesRoutes);
+app.use(archivosRoutes);
 app.use(servicios, checkToken);
 app.use(tipoDocumento, checkToken);
 app.use(documentoRoutes, checkToken);

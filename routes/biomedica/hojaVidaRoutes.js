@@ -4,6 +4,7 @@ const HojaVida = require('../../models/Biomedica/HojaVida');
 const Equipo = require('../../models/Biomedica/Equipo');
 const DatosTecnicos = require('../../models/Biomedica/DatosTecnicos');
 const Servicio = require('../../models/generales/Servicio');
+const Sede = require('../../models/generales/Sede');
 
 // Obtener todas las hojas de vida
 router.get('/hojasvida', async (req, res) => {
@@ -88,8 +89,12 @@ router.get('/hojavidaequipo/:id', async (req, res) => {
                     as: 'equipo',
                     include: [
                         {
-                            model: Servicio, // ajusta si tu ruta al modelo es distinta
+                            model: Servicio,
                             as: 'servicios'
+                        },
+                        {
+                            model: Sede,
+                            as: 'sedes'                            
                         }
                     ]
                 },
