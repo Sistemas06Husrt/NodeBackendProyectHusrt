@@ -33,6 +33,15 @@ router.get('/responsablescomodatos', async (req, res) => {
     }
 });
 
+router.get('/responsablestodos', async (req, res) => {
+    try {
+        const responsables = await Responsable.findAll();
+        res.json(responsables);
+    } catch (error) {
+        res.status(500).json({ error: 'Error al obtener los responsables', detalle: error.message });
+    }
+});
+
 // Obtener un responsable por ID
 router.get('/responsable/:id', async (req, res) => {
     try {

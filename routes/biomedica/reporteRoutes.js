@@ -47,7 +47,7 @@ router.post('/addreporte', async (req, res) => {
 });
 
 // Actualizar un reporte
-router.put('/actreporte/:id', async (req, res) => {
+router.put('/actualizarreporte/:id', async (req, res) => {
   try {
     const reporte = await Reporte.findByPk(req.params.id);
     if (!reporte) return res.status(404).json({ error: 'Reporte no encontrado' });
